@@ -115,6 +115,12 @@ void MessageGenerator::
 GenerateStructTypedef(google::protobuf::io::Printer* printer) {
   printer->Print("typedef struct $classname$ $classname$;\n",
                  "classname", FullNameToC(descriptor_->full_name(), descriptor_->file()));
+ 
+  printer->Print("typedef struct $classname$ ",
+                 "classname", FullNameToC(descriptor_->full_name(), descriptor_->file()));
+
+  printer->Print("$lcclassname$;\n",
+                 "lcclassname", FullNameToLower(descriptor_->full_name(), descriptor_->file()));
 
   for (int i = 0; i < descriptor_->nested_type_count(); i++) {
     nested_generators_[i]->GenerateStructTypedef(printer);
